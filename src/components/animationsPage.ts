@@ -4,7 +4,7 @@ class AnimationPage {
     private sameCirclesContainer: HTMLElement = document.querySelector(".same-circles") as HTMLElement;
 
     // 15
-    private animationQuantity: number = 2;
+    private animationQuantity: number = 15;
     private intervals: number = 2000;
     private whiteCurtainAppear: number = 1000;
 
@@ -12,7 +12,7 @@ class AnimationPage {
     private answers: number[] = [];
 
     private keyPressedAmount: number = 0;
-    private maxSameCirclesDisplay: number = 2;
+    private maxSameCirclesDisplay: number = 30;
 
     constructor(private personAnswerCallback: (info: number[]) => void) {
         this.initAnswerButtons();

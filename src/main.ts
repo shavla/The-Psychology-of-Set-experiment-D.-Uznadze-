@@ -37,7 +37,6 @@ class Game {
             this.hidePage(this.finalPageContainer);
             this.showPage(this.homePageContainer);
             this.storageInLocalhost();
-            console.log(this.allPerson)
         });
     }
 
