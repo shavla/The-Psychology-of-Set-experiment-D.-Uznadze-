@@ -33,16 +33,29 @@ class Game {
             this.downloadExcelFile(excelData, 'example.xls');
 
             this.allPerson = [];
+        }, () => {
+            this.hidePage(this.finalPageContainer);
+            this.showPage(this.homePageContainer);
+            this.storageInLocalhost();
+            console.log(this.allPerson)
         });
     }
 
+    private storageInLocalhost() {
+        let oldData = [];
+        if (localStorage.getItem("data")) {
+            oldData = JSON.parse(localStorage.getItem("data") as string);
+        }
+        localStorage.setItem("data", JSON.stringify([...oldData, ...this.createXLSXItems([this.allPerson[this.allPerson.length - 1]])]));
+    }
+
     private getStorageData(): (number[] | string[])[] {
-        let oldData = []
+        let oldData = [];
         if (localStorage.getItem("data")) {
             oldData = JSON.parse(localStorage.getItem("data") as string);
         }
 
-        let onlyAnswers = [...oldData, ...this.createXLSXItems(this.allPerson)];
+        let onlyAnswers = [...oldData, ...this.createXLSXItems([this.allPerson[this.allPerson.length - 1]])];
         localStorage.setItem("data", JSON.stringify(onlyAnswers));
 
         let newData = [this.createXLSXHeader(), ...onlyAnswers];
