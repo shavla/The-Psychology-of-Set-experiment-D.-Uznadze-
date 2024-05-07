@@ -11,6 +11,7 @@ class HomePage {
     private initStartButton() {
         const startButton = document.querySelector(".start-button");
         startButton?.addEventListener("click", () => {
+            //this.startCallback({ id: 1, age: 1, gender: "male" })
             if (this.allInputIsFilled()) {
                 this.startCallback(
                     {

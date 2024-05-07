@@ -1,16 +1,29 @@
 import AnimationPage from './components/animationsPage';
 import FinalPage from './components/finalPage';
 import HomePage, { PersonInfo } from './components/homePage';
+import SettingsPage from './components/settingsPage';
 import './styles.scss';
 
 class Game {
     private homePageContainer: HTMLElement = document.querySelector("#home-page") as HTMLElement;
     private animationPageContainer: HTMLElement = document.querySelector("#animations") as HTMLElement;
     private finalPageContainer: HTMLElement = document.querySelector("#final-page") as HTMLElement;
+    private settingsPageContainer: HTMLElement = document.querySelector("#settings-page") as HTMLElement;
+    private settingsButton: HTMLElement = document.querySelector(".btn-info") as HTMLElement;
 
     private allPerson: PersonDate[] = [];
 
     constructor() {
+        new SettingsPage(() => {
+            this.showPage(this.homePageContainer);
+            this.hidePage(this.settingsPageContainer);
+        });
+
+        this.settingsButton.addEventListener("click", () => {
+            this.hidePage(this.homePageContainer);
+            this.showPage(this.settingsPageContainer);
+        });
+
         let animationPage = new AnimationPage((answers: number[]) => {
             this.allPerson[this.allPerson.length - 1].answers = answers;
             this.hidePage(this.animationPageContainer);
@@ -72,7 +85,7 @@ class Game {
 
 
     private createXLSXHeader(): string[] {
-        let arr = ["id"];
+        let arr = ["id", "firstpage", "firstchoice"];
         for (let i = 1; i < 31; i++) {
             arr.push(`${i}`);
         }

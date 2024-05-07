@@ -5,17 +5,10 @@ body {
   overflow: hidden;
 }
 
-#content {
-  width: 100%;
-  height: 100%;
-}
-
 #home-page {
-  width: 50%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  .home-wrapper {
+    position: relative;
+  }
 
   .gender-age {
     display: flex;
@@ -29,6 +22,12 @@ body {
     select {
       margin-right: 1rem;
     }
+  }
+
+  .btn-info {
+    position: absolute;
+    top: 10%;
+    left: 10%;
   }
 
   .validation-error {
@@ -46,9 +45,6 @@ body {
 }
 
 #animations {
-  width: 100%;
-  height: 100%;
-
   .black-curtain {
     width: 100%;
     height: 100%;
@@ -57,33 +53,29 @@ body {
   }
 
   .different-circles {
-    width: 75%;
-    max-width: 1000px;
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     margin: 0 auto;
 
     .left-circle {
       width: 17em;
       height: 17em;
       border: 2px solid black;
-      background-color: black;
       border-radius: 50%;
+      margin-right: 3em;
     }
+
     .right-circle {
       width: 30em;
       height: 30em;
       border: 2px solid black;
-      background-color: black;
       border-radius: 50%;
     }
   }
 
   .same-circles {
-    width: 75%;
-    max-width: 1000px;
     height: 100%;
     margin: 0 auto;
 
@@ -92,17 +84,24 @@ body {
       height: 100%;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+    }
+    .same-left-circle {
+      margin-right: 3em;
     }
 
     .circle {
       width: 22.5em;
       height: 22.5em;
       border: 2px solid black;
-      background-color: black;
       border-radius: 50%;
     }
   }
+
+  .filled {
+    background-color: black;
+  }
+
   .buttons-container {
     position: absolute;
     bottom: 2em;
@@ -117,13 +116,63 @@ body {
 
 #final-page {
   display: flex;
-  width: 100%;
-  height: 100%;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 
   button {
     width: 10em;
+  }
+}
+
+#settings-page {
+  p {
+    margin: 0;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+  }
+
+  .save-btn {
+    position: absolute;
+    left: 50%;
+    bottom: 2%;
+    padding: 0.5em 3em;
+    transform: translate(-50%, -50%);
+  }
+
+  .dimensions-setting {
+    border: 1px solid black;
+    border-radius: 1em;
+    padding: 1em;
+  }
+
+  .circles {
+    .settings-left-circle {
+      width: 17em;
+      height: 17em;
+      margin-right: 3em;
+      border-radius: 50%;
+      border: 2px solid black;
+    }
+
+    .settings-right-circle {
+      width: 30em;
+      height: 30em;
+      border-radius: 50%;
+      border: 2px solid black;
+    }
+
+    .filled {
+      background-color: black;
+    }
+  }
+
+  .first-page-setting {
+    border: 1px solid black;
+    border-radius: 1em;
   }
 }

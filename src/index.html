@@ -8,41 +8,100 @@
 </head>
 
 <body>
-  <div id="content">
-    <div id="home-page" class="d-flex flex-column align-items-center">
-      <div class="name-surname w-100">
-        <div class="form-floating mb-3">
-          <input type="number" class="form-control" id="name-input" placeholder="id">
-          <label for="name-input">Enter ID</label>
+  <div id="content" class="w-100 h-100">
+    <div id="options-page" class="d-none">
+      <div>this is options page</div>
+    </div>
+    <div id="home-page" class="d-flex align-items-center justify-content-center w-100 h-100">
+      <button type="button" class="btn btn-info">Settings</button>
+      <div class="home-wrapper d-flex flex-column align-items-center w-50">
+        <div class="name-surname w-100">
+          <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="name-input" placeholder="id">
+            <label for="name-input">Enter ID</label>
+          </div>
         </div>
-      </div>
-      <div class="gender-age mb-3 w-100">
-        <select class="form-select">
-          <option value="">Select Gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-        <div class="form-floating">
-          <input type="number" class="form-control" id="age-input" placeholder="age" min="1">
-          <label for="age-input">Enter Age</label>
+        <div class="gender-age mb-3 w-100">
+          <select class="form-select">
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          <div class="form-floating">
+            <input type="number" class="form-control" id="age-input" placeholder="age" min="1">
+            <label for="age-input">Enter Age</label>
+          </div>
         </div>
-      </div>
-      <button type="button" class="btn btn-success w-50 start-button">Start</button>
-      <div class="validation-error">
-        Fill the inputs correctly
+        <button type="button" class="btn btn-success w-50 start-button">Start</button>
+        <div class="validation-error">
+          Fill the inputs correctly
+        </div>
       </div>
     </div>
 
-    <div id="animations" class="d-none">
+    <div id="settings-page" class="d-none">
+      <div class="settings-title d-flex align-items-center justify-content-center">
+        <h1>Settings</h1>
+        <button type="button" class="btn btn-danger close-btn">X</button>
+      </div>
+      <div class="settings d-flex mt-2">
+        <div class="d-flex flex-column align-items-center justify-content-center w-25">
+          <div class="fill-setting form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="fill">
+            <label class="form-check-label" for="fill">Empty or Filled</label>
+          </div>
+          <div class="space-between-setting d-flex align-items-center w-100 text-center">
+            <p class="w-25 text-center">Space between: </p>
+            <input type="number" class="form-control space-between w-50 text-center" min="0" value="3">
+            <p class="w-25">em</p>
+          </div>
+        </div>
+
+        <div class="dimensions-setting w-25">
+          <p>Dimensions</p>
+          <div class="d-flex align-items-center justify-content-between text-center">
+            <p class="w-25">Left:</p>
+            <input type="number" class="form-control left-dimention w-50 text-center" min="1" value="17">
+            <p class="w-25">em</p>
+          </div>
+          <div class="d-flex align-items-center mt-1 justify-content-between text-center">
+            <p class="w-25">Right:</p>
+            <input type="number" class="form-control right-dimention w-50 text-center" min="1" value="30">
+            <p class="w-25">em</p>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-center w-25 text-center">
+          <p class="w-25">Same Circles:</p>
+          <input type="number" class="form-control same-dimention w-50 text-center" min="1" value="22.5">
+          <p class="w-25">em</p>
+        </div>
+
+        <div class="first-page-setting d-flex align-items-center justify-content-center w-25 text-center">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="first-page-checkbox">
+            <label class="form-check-label" for="first-page-checkbox">Need First Page</label>
+          </div>
+        </div>
+      </div>
+      <div class="circles d-flex align-items-center justify-content-center mt-3">
+        <div class="settings-left-circle"></div>
+        <div class="settings-right-circle"></div>
+      </div>
+
+      <button type="button" class="btn btn-success save-btn">Save</button>
+    </div>
+
+    <div id="animations" class="d-none w-100 h-100">
       <div class="black-curtain d-none"></div>
       <div class="different-circles">
-        <div class="left-circle"></div>
-        <div class="right-circle"></div>
+        <div class="left-circle left"></div>
+        <div class="right-circle right"></div>
       </div>
       <div class="same-circles d-none">
         <div class="circles-container">
-          <div class="circle"></div>
-          <div class="circle"></div>
+          <div class="same-left-circle circle"></div>
+          <div class="same-right-circle circle"></div>
         </div>
         <div class="buttons-container">
           <div class="btn-group" role="group">
@@ -54,7 +113,7 @@
       </div>
     </div>
 
-    <div id="final-page" class="d-none">
+    <div id="final-page" class="d-none w-100 h-100">
       <button type="button" class="btn btn-success add-new-button">Add New Person</button>
       <button type="button" class="btn btn-success finish-button mt-2">Finish</button>
     </div>

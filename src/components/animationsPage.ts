@@ -1,10 +1,11 @@
+import { Settings } from "./settingsPage";
+
 class AnimationPage {
     private whiteCurtain: HTMLElement = document.querySelector(".black-curtain") as HTMLElement;
     private differentCirclesContainer: HTMLElement = document.querySelector(".different-circles") as HTMLElement;
     private sameCirclesContainer: HTMLElement = document.querySelector(".same-circles") as HTMLElement;
 
-    // 15
-    private animationQuantity: number = 15;
+    private animationQuantity: number = 2; // 15
     private intervals: number = 2000;
     private whiteCurtainAppear: number = 1000;
 
@@ -12,7 +13,10 @@ class AnimationPage {
     private answers: number[] = [];
 
     private keyPressedAmount: number = 0;
-    private maxSameCirclesDisplay: number = 30;
+    private maxSameCirclesDisplay: number = 3; // 30
+    private needFirstPage: boolean = false;
+
+    private spaceBetweenCircles: number = 3;
 
     constructor(private personAnswerCallback: (info: number[]) => void) {
         this.initAnswerButtons();
@@ -21,8 +25,57 @@ class AnimationPage {
     startAgain() {
         this.keyPressedAmount = 0;
         this.answers = [];
+        this.setCirclesStyle();
         this.setStartPositions();
-        this.startAnimations();
+        if (this.needFirstPage) {
+            this.showFirstPage();
+        } else {
+            this.startAnimations();
+        }
+    }
+
+    private setCirclesStyle() {
+        if (localStorage.getItem("settings")) {
+            let settings: Settings = JSON.parse(localStorage.getItem("settings") as string);
+            let leftCircle: HTMLElement = this.differentCirclesContainer.querySelector(".left-circle") as HTMLElement;
+            let rightCircle: HTMLElement = this.differentCirclesContainer.querySelector(".right-circle") as HTMLElement;
+
+            let sameLeftCircle: HTMLElement = this.sameCirclesContainer.querySelector(".same-left-circle") as HTMLElement;
+            let sameRightCircle: HTMLElement = this.sameCirclesContainer.querySelector(".same-right-circle") as HTMLElement;
+
+            if (settings.filled) {
+                leftCircle.classList.add("filled");
+                rightCircle.classList.add("filled");
+                sameLeftCircle.classList.add("filled");
+                sameRightCircle.classList.add("filled");
+            }
+
+            leftCircle.style.width = `${settings.leftDimension}em`;
+            leftCircle.style.height = `${settings.leftDimension}em`;
+
+            rightCircle.style.width = `${settings.rightDimension}em`;
+            rightCircle.style.height = `${settings.rightDimension}em`;
+
+            sameLeftCircle.style.width = `${settings.sameDimension}em`;
+            sameLeftCircle.style.height = `${settings.sameDimension}em`;
+
+            sameRightCircle.style.width = `${settings.sameDimension}em`;
+            sameRightCircle.style.height = `${settings.sameDimension}em`;
+
+            leftCircle.style.marginRight = `${settings.spaceBetween}em`;
+            sameLeftCircle.style.marginRight = `${settings.spaceBetween}em`;
+
+            this.spaceBetweenCircles = settings.spaceBetween;
+
+            this.needFirstPage = settings.needFirstPage;
+        }
+
+        if (this.needFirstPage) {
+            this.answers.push(1)
+        } else {
+            this.answers.push(0);
+            this.answers.push(0);
+        }
     }
 
     private startAnimations() {
@@ -39,6 +92,12 @@ class AnimationPage {
         }
     }
 
+    private showFirstPage() {
+        this.canPressButton = true;
+        this.hidePage(this.differentCirclesContainer);
+        this.showPage(this.sameCirclesContainer);
+    }
+
     private showSameBalls() {
         setTimeout(() => {
             this.canPressButton = true;
@@ -53,18 +112,58 @@ class AnimationPage {
             if (this.canPressButton) {
                 if (e.key == "ArrowLeft") {
                     this.answers.push(0);
-                    this.checkForFinish();
+                    if (this.needFirstPage) {
+                        this.changeCirclesPositions();
+                        this.firstPageClick();
+                    } else {
+                        this.checkForFinish();
+                    }
                 }
                 if (e.key == "ArrowDown") {
                     this.answers.push(1);
-                    this.checkForFinish();
+                    if (this.needFirstPage) {
+                        this.changeNormalCirclesPosition();
+                        this.firstPageClick();
+                    } else {
+                        this.checkForFinish();
+                    }
                 }
                 if (e.key == "ArrowRight") {
                     this.answers.push(2);
-                    this.checkForFinish();
+                    if (this.needFirstPage) {
+                        this.changeNormalCirclesPosition();
+                        this.firstPageClick();
+                    } else {
+                        this.checkForFinish();
+                    }
                 }
             }
         })
+    }
+
+    private changeCirclesPositions() {
+        this.differentCirclesContainer.classList.add("flex-row-reverse");
+        let leftCircle: HTMLElement = this.differentCirclesContainer.querySelector(".left-circle") as HTMLElement;
+        let rightCircle: HTMLElement = this.differentCirclesContainer.querySelector(".right-circle") as HTMLElement;
+
+        leftCircle.style.marginRight = "0em";
+        rightCircle.style.marginRight = `${this.spaceBetweenCircles}em`;
+    }
+
+    private changeNormalCirclesPosition() {
+        this.differentCirclesContainer.classList.remove("flex-row-reverse");
+        let leftCircle: HTMLElement = this.differentCirclesContainer.querySelector(".left-circle") as HTMLElement;
+        let rightCircle: HTMLElement = this.differentCirclesContainer.querySelector(".right-circle") as HTMLElement;
+
+        rightCircle.style.marginRight = "0em";
+        leftCircle.style.marginRight = `${this.spaceBetweenCircles}em`;
+    }
+
+    private firstPageClick() {
+        this.canPressButton = false;
+        this.needFirstPage = false;
+        this.setStartPositions();
+        this.startAnimations();
     }
 
     private checkForFinish() {
