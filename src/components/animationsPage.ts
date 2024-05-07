@@ -5,7 +5,7 @@ class AnimationPage {
     private differentCirclesContainer: HTMLElement = document.querySelector(".different-circles") as HTMLElement;
     private sameCirclesContainer: HTMLElement = document.querySelector(".same-circles") as HTMLElement;
 
-    private animationQuantity: number = 2; // 15
+    private animationQuantity: number = 15; // 15
     private intervals: number = 2000;
     private whiteCurtainAppear: number = 1000;
 
@@ -13,7 +13,7 @@ class AnimationPage {
     private answers: number[] = [];
 
     private keyPressedAmount: number = 0;
-    private maxSameCirclesDisplay: number = 3; // 30
+    private maxSameCirclesDisplay: number = 30; // 30
     private needFirstPage: boolean = false;
 
     private spaceBetweenCircles: number = 3;
