@@ -86,7 +86,7 @@ class Game {
 
     private createXLSXHeader(): string[] {
         let arr = ["id", "firstpage", "firstchoice"];
-        for (let i = 1; i < 31; i++) {
+        for (let i = 1; i < 41; i++) {
             arr.push(`${i}`);
         }
         return arr;

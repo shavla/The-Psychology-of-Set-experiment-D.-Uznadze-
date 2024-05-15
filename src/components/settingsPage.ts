@@ -4,10 +4,13 @@ class SettingsPage {
 
     private leftDimensionInput: HTMLInputElement = document.querySelector(".left-dimention") as HTMLInputElement;
     private rightDimensionInput: HTMLInputElement = document.querySelector(".right-dimention") as HTMLInputElement;
+    private middleDimensionInput: HTMLInputElement = document.querySelector(".middle-dimention") as HTMLInputElement;
+
     private sameDimensionInput: HTMLInputElement = document.querySelector(".same-dimention") as HTMLInputElement;
     private spaceBetweenInput: HTMLInputElement = document.querySelector(".space-between") as HTMLInputElement;
 
     private leftCircle: HTMLElement = document.querySelector(".settings-left-circle") as HTMLElement;
+    private middleCircle: HTMLElement = document.querySelector(".settings-middle-circle") as HTMLElement;
     private rightCircle: HTMLElement = document.querySelector(".settings-right-circle") as HTMLElement;
 
     private closeButton: HTMLElement = document.querySelector("#settings-page .close-btn") as HTMLElement;
@@ -18,6 +21,7 @@ class SettingsPage {
         leftDimension: 17,
         rightDimension: 30,
         sameDimension: 22.5,
+        middleDimension: 4,
         spaceBetween: 3,
         needFirstPage: false,
     }
@@ -36,6 +40,7 @@ class SettingsPage {
             this.rightDimensionInput.value = this.defaulValues.rightDimension.toString();
             this.sameDimensionInput.value = this.defaulValues.sameDimension.toString();
             this.spaceBetweenInput.value = this.defaulValues.spaceBetween.toString();
+            this.middleDimensionInput.value = this.defaulValues.middleDimension.toString();
             this.firstPageInput.checked = this.defaulValues.needFirstPage;
         }
 
@@ -50,13 +55,18 @@ class SettingsPage {
         this.rightCircle.style.width = `${this.defaulValues.rightDimension}em`;
         this.rightCircle.style.height = `${this.defaulValues.rightDimension}em`;
 
+        this.middleCircle.style.width = `${this.defaulValues.middleDimension}em`;
+        this.middleCircle.style.height = `${this.defaulValues.middleDimension}em`;
+
         this.leftCircle.style.marginRight = `${this.defaulValues.spaceBetween}em`;
+        this.rightCircle.style.marginLeft = `${this.defaulValues.spaceBetween}em`;
     }
 
     private setSettingsInLocalStorage() {
         this.defaulValues.filled = this.fillInput.checked;
         this.defaulValues.leftDimension = +this.leftDimensionInput.value;
         this.defaulValues.rightDimension = +this.rightDimensionInput.value;
+        this.defaulValues.middleDimension = +this.middleDimensionInput.value;
         this.defaulValues.sameDimension = +this.sameDimensionInput.value;
         this.defaulValues.spaceBetween = +this.spaceBetweenInput.value;
         this.defaulValues.needFirstPage = this.firstPageInput.checked;
@@ -85,8 +95,14 @@ class SettingsPage {
             this.rightCircle.style.height = `${this.rightDimensionInput.value}em`;
         });
 
+        this.middleDimensionInput.addEventListener("change", () => {
+            this.middleCircle.style.width = `${this.middleDimensionInput.value}em`;
+            this.middleCircle.style.height = `${this.middleDimensionInput.value}em`;
+        });
+
         this.spaceBetweenInput.addEventListener("change", () => {
             this.leftCircle.style.marginRight = `${this.spaceBetweenInput.value}em`;
+            this.rightCircle.style.marginLeft = `${this.spaceBetweenInput.value}em`;
         });
     }
 }
@@ -97,6 +113,7 @@ export type Settings = {
     filled: boolean,
     leftDimension: number,
     rightDimension: number,
+    middleDimension: number,
     sameDimension: number,
     spaceBetween: number,
     needFirstPage: boolean,

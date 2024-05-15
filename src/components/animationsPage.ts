@@ -5,21 +5,27 @@ class AnimationPage {
     private differentCirclesContainer: HTMLElement = document.querySelector(".different-circles") as HTMLElement;
     private sameCirclesContainer: HTMLElement = document.querySelector(".same-circles") as HTMLElement;
 
-    private animationQuantity: number = 15; // 15
-    private intervals: number = 2000;
-    private whiteCurtainAppear: number = 1000;
-
     private canPressButton: boolean = false;
     private answers: number[] = [];
 
     private keyPressedAmount: number = 0;
-    private maxSameCirclesDisplay: number = 30; // 30
-    private needFirstPage: boolean = false;
+    private maxSameCirclesDisplay: number = 40; // 30
 
-    private spaceBetweenCircles: number = 3;
+    private settings: Settings = {
+        filled: false,
+        leftDimension: 17,
+        rightDimension: 30,
+        sameDimension: 22.5,
+        middleDimension: 4,
+        spaceBetween: 3,
+        needFirstPage: false
+    };
 
     constructor(private personAnswerCallback: (info: number[]) => void) {
         this.initAnswerButtons();
+        this.differentCirclesContainer.addEventListener("animationend", () => {
+            this.showSameBalls();
+        });
     }
 
     startAgain() {
@@ -27,7 +33,7 @@ class AnimationPage {
         this.answers = [];
         this.setCirclesStyle();
         this.setStartPositions();
-        if (this.needFirstPage) {
+        if (this.settings.needFirstPage) {
             this.showFirstPage();
         } else {
             this.startAnimations();
@@ -36,41 +42,51 @@ class AnimationPage {
 
     private setCirclesStyle() {
         if (localStorage.getItem("settings")) {
-            let settings: Settings = JSON.parse(localStorage.getItem("settings") as string);
+            this.settings = JSON.parse(localStorage.getItem("settings") as string);
             let leftCircle: HTMLElement = this.differentCirclesContainer.querySelector(".left-circle") as HTMLElement;
+            let middleCircle: HTMLElement = this.differentCirclesContainer.querySelector(".middle-circle") as HTMLElement;
             let rightCircle: HTMLElement = this.differentCirclesContainer.querySelector(".right-circle") as HTMLElement;
 
             let sameLeftCircle: HTMLElement = this.sameCirclesContainer.querySelector(".same-left-circle") as HTMLElement;
+            let sameMiddleCircle: HTMLElement = this.sameCirclesContainer.querySelector(".same-middle-circle") as HTMLElement;
             let sameRightCircle: HTMLElement = this.sameCirclesContainer.querySelector(".same-right-circle") as HTMLElement;
 
-            if (settings.filled) {
+            if (this.settings.filled) {
                 leftCircle.classList.add("filled");
                 rightCircle.classList.add("filled");
                 sameLeftCircle.classList.add("filled");
                 sameRightCircle.classList.add("filled");
             }
 
-            leftCircle.style.width = `${settings.leftDimension}em`;
-            leftCircle.style.height = `${settings.leftDimension}em`;
+            leftCircle.style.width = `${this.settings.leftDimension}em`;
+            leftCircle.style.height = `${this.settings.leftDimension}em`;
 
-            rightCircle.style.width = `${settings.rightDimension}em`;
-            rightCircle.style.height = `${settings.rightDimension}em`;
+            middleCircle.style.width = `${this.settings.middleDimension}em`;
+            middleCircle.style.height = `${this.settings.middleDimension}em`;
 
-            sameLeftCircle.style.width = `${settings.sameDimension}em`;
-            sameLeftCircle.style.height = `${settings.sameDimension}em`;
+            rightCircle.style.width = `${this.settings.rightDimension}em`;
+            rightCircle.style.height = `${this.settings.rightDimension}em`;
 
-            sameRightCircle.style.width = `${settings.sameDimension}em`;
-            sameRightCircle.style.height = `${settings.sameDimension}em`;
+            sameLeftCircle.style.width = `${this.settings.sameDimension}em`;
+            sameLeftCircle.style.height = `${this.settings.sameDimension}em`;
 
-            leftCircle.style.marginRight = `${settings.spaceBetween}em`;
-            sameLeftCircle.style.marginRight = `${settings.spaceBetween}em`;
+            sameRightCircle.style.width = `${this.settings.sameDimension}em`;
+            sameRightCircle.style.height = `${this.settings.sameDimension}em`;
 
-            this.spaceBetweenCircles = settings.spaceBetween;
+            sameMiddleCircle.style.width = `${this.settings.middleDimension}em`;
+            sameMiddleCircle.style.height = `${this.settings.middleDimension}em`;
 
-            this.needFirstPage = settings.needFirstPage;
+            leftCircle.style.marginRight = `${this.settings.spaceBetween}em`;
+            rightCircle.style.marginLeft = `${this.settings.spaceBetween}em`;
+            sameLeftCircle.style.marginRight = `${this.settings.spaceBetween}em`;
+            sameRightCircle.style.marginLeft = `${this.settings.spaceBetween}em`;
+
+            let redCircle = this.whiteCurtain.querySelector(".red-circle") as HTMLElement;
+            redCircle.style.width = `${this.settings.middleDimension}em`;
+            redCircle.style.height = `${this.settings.middleDimension}em`;
         }
 
-        if (this.needFirstPage) {
+        if (this.settings.needFirstPage) {
             this.answers.push(1)
         } else {
             this.answers.push(0);
@@ -79,17 +95,8 @@ class AnimationPage {
     }
 
     private startAnimations() {
-        for (let i = 0; i < this.animationQuantity; i++) {
-            setTimeout(() => {
-                this.hidePage(this.whiteCurtain);
-                setTimeout(() => {
-                    this.showPage(this.whiteCurtain);
-                    if (i == this.animationQuantity - 1) {
-                        this.showSameBalls();
-                    }
-                }, this.whiteCurtainAppear);
-            }, i * this.intervals);
-        }
+        this.differentCirclesContainer.classList.remove("flash-animation");
+        this.differentCirclesContainer.classList.add("flash-animation");
     }
 
     private showFirstPage() {
@@ -99,12 +106,10 @@ class AnimationPage {
     }
 
     private showSameBalls() {
-        setTimeout(() => {
-            this.canPressButton = true;
-            this.hidePage(this.differentCirclesContainer);
-            this.hidePage(this.whiteCurtain);
-            this.showPage(this.sameCirclesContainer);
-        }, this.intervals - this.whiteCurtainAppear);
+        this.canPressButton = true;
+        this.hidePage(this.differentCirclesContainer);
+        this.hidePage(this.whiteCurtain);
+        this.showPage(this.sameCirclesContainer);
     }
 
     private initAnswerButtons() {
@@ -112,7 +117,7 @@ class AnimationPage {
             if (this.canPressButton) {
                 if (e.key == "ArrowLeft") {
                     this.answers.push(0);
-                    if (this.needFirstPage) {
+                    if (this.settings.needFirstPage) {
                         this.changeCirclesPositions();
                         this.firstPageClick();
                     } else {
@@ -121,8 +126,7 @@ class AnimationPage {
                 }
                 if (e.key == "ArrowDown") {
                     this.answers.push(1);
-                    if (this.needFirstPage) {
-                        this.changeNormalCirclesPosition();
+                    if (this.settings.needFirstPage) {
                         this.firstPageClick();
                     } else {
                         this.checkForFinish();
@@ -130,8 +134,7 @@ class AnimationPage {
                 }
                 if (e.key == "ArrowRight") {
                     this.answers.push(2);
-                    if (this.needFirstPage) {
-                        this.changeNormalCirclesPosition();
+                    if (this.settings.needFirstPage) {
                         this.firstPageClick();
                     } else {
                         this.checkForFinish();
@@ -142,26 +145,22 @@ class AnimationPage {
     }
 
     private changeCirclesPositions() {
-        this.differentCirclesContainer.classList.add("flex-row-reverse");
         let leftCircle: HTMLElement = this.differentCirclesContainer.querySelector(".left-circle") as HTMLElement;
         let rightCircle: HTMLElement = this.differentCirclesContainer.querySelector(".right-circle") as HTMLElement;
 
-        leftCircle.style.marginRight = "0em";
-        rightCircle.style.marginRight = `${this.spaceBetweenCircles}em`;
-    }
+        leftCircle.style.width = `${this.settings.rightDimension}em`;
+        leftCircle.style.height = `${this.settings.rightDimension}em`;
 
-    private changeNormalCirclesPosition() {
-        this.differentCirclesContainer.classList.remove("flex-row-reverse");
-        let leftCircle: HTMLElement = this.differentCirclesContainer.querySelector(".left-circle") as HTMLElement;
-        let rightCircle: HTMLElement = this.differentCirclesContainer.querySelector(".right-circle") as HTMLElement;
+        rightCircle.style.width = `${this.settings.leftDimension}em`;
+        rightCircle.style.height = `${this.settings.leftDimension}em`;
 
-        rightCircle.style.marginRight = "0em";
-        leftCircle.style.marginRight = `${this.spaceBetweenCircles}em`;
+        leftCircle.style.marginRight = `${this.settings.spaceBetween}em`;
+        rightCircle.style.marginLeft = `${this.settings.spaceBetween}em`;
     }
 
     private firstPageClick() {
         this.canPressButton = false;
-        this.needFirstPage = false;
+        this.settings.needFirstPage = false;
         this.setStartPositions();
         this.startAnimations();
     }

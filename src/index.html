@@ -9,9 +9,6 @@
 
 <body>
   <div id="content" class="w-100 h-100">
-    <div id="options-page" class="d-none">
-      <div>this is options page</div>
-    </div>
     <div id="home-page" class="d-flex align-items-center justify-content-center w-100 h-100">
       <button type="button" class="btn btn-info">Settings</button>
       <div class="home-wrapper d-flex flex-column align-items-center w-50">
@@ -65,6 +62,11 @@
             <p class="w-25">em</p>
           </div>
           <div class="d-flex align-items-center mt-1 justify-content-between text-center">
+            <p class="w-25">Middle:</p>
+            <input type="number" class="form-control middle-dimention w-50 text-center" min="0" value="4">
+            <p class="w-25">em</p>
+          </div>
+          <div class="d-flex align-items-center mt-1 justify-content-between text-center">
             <p class="w-25">Right:</p>
             <input type="number" class="form-control right-dimention w-50 text-center" min="1" value="30">
             <p class="w-25">em</p>
@@ -85,22 +87,35 @@
         </div>
       </div>
       <div class="circles d-flex align-items-center justify-content-center mt-3">
-        <div class="settings-left-circle"></div>
-        <div class="settings-right-circle"></div>
+        <div class="circle justify-content-end">
+          <div class="settings-left-circle"></div>
+        </div>
+        <div class="settings-middle-circle"></div>
+        <div class="circle">
+          <div class="settings-right-circle"></div>
+        </div>
       </div>
 
       <button type="button" class="btn btn-success save-btn">Save</button>
     </div>
 
     <div id="animations" class="d-none w-100 h-100">
-      <div class="black-curtain d-none"></div>
+      <div class="black-curtain d-none">
+        <div class="red-circle"></div>
+      </div>
       <div class="different-circles">
-        <div class="left-circle left"></div>
-        <div class="right-circle right"></div>
+        <div class="circle justify-content-end">
+          <div class="left-circle left"></div>
+        </div>
+        <div class="middle-circle middle"></div>
+        <div class="circle">
+          <div class="right-circle right"></div>
+        </div>
       </div>
       <div class="same-circles d-none">
         <div class="circles-container">
           <div class="same-left-circle circle"></div>
+          <div class="same-middle-circle circle"></div>
           <div class="same-right-circle circle"></div>
         </div>
         <div class="buttons-container">

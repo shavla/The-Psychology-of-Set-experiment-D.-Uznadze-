@@ -50,6 +50,17 @@ body {
     height: 100%;
     background: #fff;
     position: absolute;
+
+    .red-circle {
+      width: 4em;
+      height: 4em;
+      background: red;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 
   .different-circles {
@@ -59,12 +70,20 @@ body {
     justify-content: center;
     margin: 0 auto;
 
+    .circle {
+      display: flex;
+      align-items: center;
+
+      div {
+        position: absolute;
+      }
+    }
+
     .left-circle {
       width: 17em;
       height: 17em;
       border: 2px solid black;
       border-radius: 50%;
-      margin-right: 3em;
     }
 
     .right-circle {
@@ -72,6 +91,33 @@ body {
       height: 30em;
       border: 2px solid black;
       border-radius: 50%;
+    }
+
+    .middle-circle {
+      width: 4em;
+      height: 4em;
+      background: red;
+      border-radius: 50%;
+    }
+
+    &.flash-animation {
+      .circle {
+        animation: flash 2s 15; //15
+      }
+      @keyframes flash {
+        0% {
+          opacity: 1;
+        }
+        49% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
     }
   }
 
@@ -86,15 +132,20 @@ body {
       align-items: center;
       justify-content: center;
     }
-    .same-left-circle {
-      margin-right: 3em;
-    }
 
     .circle {
       width: 22.5em;
       height: 22.5em;
       border: 2px solid black;
       border-radius: 50%;
+    }
+
+    .same-middle-circle {
+      width: 4em;
+      height: 4em;
+      background: red;
+      border-radius: 50%;
+      border: none;
     }
   }
 
@@ -148,15 +199,35 @@ body {
     border: 1px solid black;
     border-radius: 1em;
     padding: 1em;
+    .form-control {
+      padding: 0 !important;
+    }
   }
 
   .circles {
+    height: 55vh;
+
+    .circle {
+      display: flex;
+      align-items: center;
+
+      div {
+        position: absolute;
+      }
+    }
+
     .settings-left-circle {
       width: 17em;
       height: 17em;
-      margin-right: 3em;
       border-radius: 50%;
       border: 2px solid black;
+    }
+
+    .settings-middle-circle {
+      background: red;
+      width: 4em;
+      height: 4em;
+      border-radius: 50%;
     }
 
     .settings-right-circle {
